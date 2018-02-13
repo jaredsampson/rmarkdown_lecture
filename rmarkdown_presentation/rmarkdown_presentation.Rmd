@@ -1,0 +1,147 @@
+---
+title: "Presenting Data with R Markdown"
+author: "Jared Sampson"
+date: "2/14/2017"
+output: 
+  beamer_presentation:
+    slide_level: 1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+```
+
+# R Markdown
+
+- Plain-text format
+- Embedded R code evaluated in-place
+- Go from raw data to final figures in a single step
+- [Markdown](https://daringfireball.net/projects/markdown/)
+- [knitr](https://yihui.name/knitr/)
+- [pandoc](http://pandoc.org/)
+
+
+# Why use R Markdown?
+
+- Reproducibility
+- Automation (saves time, avoid tedious formatting)
+- Durability
+
+
+# General workflow
+
+1. Create a folder with your data.
+2. Write text and R code in an .Rmd file
+3. `knitr` compiles .Rmd => .md
+4. `pandoc` converts .md => {.docx, .pdf, .html}
+
+
+# Example .Rmd document
+
+````
+## A Heading
+
+This is some text in **bold** and *italic*.  With a 
+[link](http://www.example.com/).
+
+`r ''````{r cars}
+summary(cars)
+`r ''````
+````
+
+
+# Example output .md
+
+## A Heading
+
+This is some text in **bold** and *italic*.  With a 
+[link](http://www.example.com/).
+
+```{r cars, echo=TRUE}
+summary(cars)
+```
+
+
+# YAML frontmatter
+
+```
+---
+title: "Hello World"
+author: "Jared Sampson"
+date: "2/12/2017"
+output: pdf_document
+---
+```
+
+- [YAML](http://yaml.org/): "a human friendly data serialization standard"
+- Goes at the top between 2 lines with `r '---'`
+- Document metadata and output settings
+
+
+# `knitr` general options
+
+````
+`r ''````{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+`r ''````
+````
+
+- Set default options applied to all code blocks inside `opts_chunk$set(...)`
+- Note the `include=FALSE`: this code does not appear in the document
+
+
+# Make some plots
+
+````
+Here are 2 histograms from some car data.
+
+`r ''````{r hist}
+par(mfrow=c(1,2))
+hist(cars$speed)
+hist(cars$dist)
+`r ''````
+````
+
+
+# Make some plots
+
+Here are 2 histograms from some car data.
+
+```{r hist}
+par(mfrow=c(1,2))
+hist(cars$speed)
+hist(cars$dist)
+```
+
+
+# Something a little more complex
+
+````
+`r ''````{r hrt, fig.width=4, fig.height=4, fig.align='left'}
+dat <- data.frame(t=seq(0, 2*pi, by=0.01))
+x_hrt <- function(t) 16*sin(t)^3
+y_hrt <- function(t) 13*cos(t)-5*cos(2*t)-2*cos(3*t)-cos(4*t)
+dat$x=x_hrt(dat$t)
+dat$y=y_hrt(dat$t)
+with(dat, plot(x, y, type='l'))
+with(dat, polygon(x,y, col=rgb(1, 0, 0, 0.7)))
+`r ''````
+````
+
+(modified from http://stackoverflow.com/a/8082714)
+
+
+# Happy Valentine's Day
+
+```{r hrt, fig.width=4, fig.height=4, fig.align='left'}
+dat <- data.frame(t=seq(0, 2*pi, by=0.01))
+x_hrt <- function(t) 16*sin(t)^3
+y_hrt <- function(t) 13*cos(t)-5*cos(2*t)-2*cos(3*t)-cos(4*t)
+dat$x=x_hrt(dat$t)
+dat$y=y_hrt(dat$t)
+with(dat, plot(x, y, type='l'))
+with(dat, polygon(x, y, col=rgb(1, 0, 0, 0.7)))
+```
+
+
+

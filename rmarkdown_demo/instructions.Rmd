@@ -1,0 +1,42 @@
+---
+title: "R Markdown Demo Instructions"
+author: "Jared Sampson"
+date: "2/14/2017"
+output: pdf_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+t.test(cars)
+```
+
+## Create a new document in RStudio
+1. File > New File > R Markdown...
+1. Select 'Document', add Title and select output format.
+
+## Getting started
+1. Save the document to a new folder for this demo project.
+1. Press 'Knit'.  You should see the formatted document appear in a new RStudio window.
+1. Look at how the source code defines `**bold**` text and "fenced" (```` ``` ````) code blocks.
+1. Delete everything after the first (`setup`) code block (or don't, if you want to keep it for reference).
+
+## Let's do a problem from Problem Set 2
+1. Copy the `bodytempandheartrate.csv` and `d9k_all.s2.csv` datasets to the folder.  Make them read-only if you like (this is a good idea).
+1. Problem #1a: Calculate 95% confidence intervals for body temperature and heart rate for the sample as a whole and for men and women separately.
+    - The brute force way, e.g. `t.test(bthr$T[bthr$MF == 1], conf.int=TRUE, conf.level=0.95)$conf.int`. Press 'Knit' (you can do this as often as you like).
+    - With variables for the data subsets: `temp_m <- bthr$T[bthr$MF == 1]`, and `t.test(temp_m), conf.int=TRUE)$conf.int`
+    - Write a function to calculate confidence intervals: `r t_conf_int <- function(x, l=0.95) {return(t.test(x, conf.int=TRUE, conf.level=l)$conf.int)}`
+    - Then do it the easy way: `t_conf_int(temp_m, 0.95)`
+
+## Make a figure
+1. Add some histograms or boxplot of the data: `hist(temp_m); hist(temp_f); hist(temp)`
+1. That takes up too much space.  Combine them into one row: `par(mfrow=c(1, 3))`
+1. But now the aspect ratio is too tall.  Correct it by adding the `fig.asp` parameter after the block name: `{r hist, fig.asp=0.4}`
+1. What if we want it to be a floating figure (i.e. not move with the text)?  `fig.cap="Figure caption."`
+1. Normal markdown doesn't have figure references, but there are 2 ways to get them.
+    1. Include a LaTeX label in the caption text (e.g. `"Figure caption.\\label{fig:plot}"`) and reference it with `\ref{fig:plot}` in the text.
+    1. Install `bookdown`
+
+
+
