@@ -1,42 +1,115 @@
 ---
 title: "Presenting Data with R Markdown"
 author: "Jared Sampson"
-date: "2/14/2017"
-output: 
-  beamer_presentation:
+date: "2/20/2018"
+output:
+  beamer_presentation: 
     slide_level: 1
+    latex_engine: xelatex
+monofont: Andale Mono
+mainfont: Arial 
+subtitle: 'PHAR G8012: Statistics for the Basic Sciences'
+header-includes: \usepackage{smartdiagram}
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo=FALSE)
+knitr::opts_chunk$set(echo=TRUE)
+options(width=40)
 ```
+
+# A typical scientific workflow
+\begin{center}
+\smartdiagramset{
+    uniform arrow color=true,
+    text width=2.25cm,
+}
+\smartdiagram[circular diagram:clockwise]{
+    Collect Data,
+    Analyze Data,
+    Make Figures,
+    Write,
+    Design New Experiments
+}
+\end{center}
+
+
+# Things we shouldn't have to do when writing a paper
+
+- Scour over a data table to make sure it matches the latest version of the Excel worksheet where the calculations were done, because we can't copy it again or we'd ruin the formatting.
+
+- Completely redo the data analysis if we add a couple more samples.
+
+- Re-check the statistics reported in the paper and any labels added to plots (e.g. significance of results, R^2^ values) after tweaking the analysis procedure.
+
+- Feel like you're spending more time formatting the paper than writing it.
+
+
 
 # R Markdown
 
-- Plain-text format
-- Embedded R code evaluated in-place
-- Go from raw data to final figures in a single step
-- [Markdown](https://daringfireball.net/projects/markdown/)
-- [knitr](https://yihui.name/knitr/)
-- [pandoc](http://pandoc.org/)
+- Plain-text format, use any text editor.
+
+- Embedded R code is evaluated in-place at compile time.
+
+- Go from raw data to final figures in a single step.
+
+- Less copy-pasting/scouring/redoing work you've already done.
+
+- Based on the following projects:
+
+    - [Markdown](https://daringfireball.net/projects/markdown/) (John Gruber)
+    - [knitr](https://yihui.name/knitr/) (Yihui Xie)
+    - [pandoc](http://pandoc.org/) (John McFarlane)
+
 
 
 # Why use R Markdown?
 
-- Reproducibility
-- Automation (saves time, avoid tedious formatting)
-- Durability
+1. Reproducibility
+    - Each analysis step is documented.
+    - Source code travels with the text.
+
+2. Automation
+    - Save time.
+    - Avoid tedious formatting and transcription errors.
+
+3. Durability
+    - Plain text is universal.
+    - Multiple supported output formats.
+
+
+
+# What can you do with R Markdown?
+
+\begin{center}
+\smartdiagram[bubble diagram]{
+    Text + Data,
+    Figures,
+    Reports,
+    Presentations,
+    Papers,
+    Grants,
+    \emph{Problem Sets!},
+    Thesis
+}
+\end{center}
+
 
 
 # General workflow
+\begin{center}
+\smartdiagram[descriptive diagram]{
+    {Setup, {Create a folder (or RStudio project) with your data file.}},
+    {Write, {Combine text, R code and figures in an \texttt{.Rmd} file.}},
+    {Knit, {\texttt{knitr} compiles R Markdown source to Markdown + figures.
+            \texttt{pandoc} converts Markdown + figures to HTML / PDF / Word.}},
+    {Repeat, {Easily modify and re-generate your document at any time.}},
+}
+\end{center}
 
-1. Create a folder with your data.
-2. Write text and R code in an .Rmd file
-3. `knitr` compiles .Rmd => .md
-4. `pandoc` converts .md => {.docx, .pdf, .html}
 
 
-# Example .Rmd document
+# A simple R Markdown document
 
 ````
 ## A Heading
@@ -44,104 +117,123 @@ knitr::opts_chunk$set(echo=FALSE)
 This is some text in **bold** and *italic*.  With a 
 [link](http://www.example.com/).
 
-`r ''````{r cars}
+```{r cars}`r ''`
 summary(cars)
-`r ''````
+```
 ````
 
 
-# Example output .md
+
+# A simple R Markdown document (knitted)
 
 ## A Heading
 
 This is some text in **bold** and *italic*.  With a 
 [link](http://www.example.com/).
 
-```{r cars, echo=TRUE}
+```{r cars}
 summary(cars)
 ```
 
 
-# YAML frontmatter
+
+# YAML "frontmatter" (header)
 
 ```
 ---
 title: "Hello World"
 author: "Jared Sampson"
-date: "2/12/2017"
+date: "2/20/2018"
 output: pdf_document
 ---
 ```
 
-- [YAML](http://yaml.org/): "a human friendly data serialization standard"
-- Goes at the top between 2 lines with `r '---'`
-- Document metadata and output settings
+- [YAML](http://yaml.org/): "a human friendly data serialization standard".
+
+- Goes at the top between 2 lines with `---`.
+
+- Holds document metadata and `pandoc` output settings.
 
 
-# `knitr` general options
+
+# `knitr` global configuration options 
 
 ````
-`r ''````{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-`r ''````
+```{r setup, include=FALSE}`r ''`
+knitr::opts_chunk$set(echo=TRUE)
+```
 ````
 
-- Set default options applied to all code blocks inside `opts_chunk$set(...)`
-- Note the `include=FALSE`: this code does not appear in the document
+- Set default options to be applied to all code blocks ("chunks") with `opts_chunk$set(...)`.
+
+- Note the `include=FALSE`: this code does not appear in the document.
 
 
-# Make some plots
+
+# Evaluate R code in code blocks or inline
+
+````
+First let's do some calculations in a block:
+
+```{r blocks_or_inline}`r ''`
+mean_speed <- mean(cars$speed)
+first_100 <- sum(1:100)
+```
+
+Then let's explain them in a paragraph.  The mean speed
+was `r '\x60r mean_speed\x60'`, and the sum of the first 100
+positive integers is `r '\x60r first_100\x60'`.
+
+We can also do calculations directly inline.  For 
+example, the first 10 numbers of the Fibonacci series 
+are `r '\x60r fib <- numeric(10); fib[1] <- 1; fib[2] <- 1;
+for (i in 3:10) {fib[i] <- fib[i-2] + fib[i-1]}; fib\x60'`.
+````
+
+
+
+# Evaluate R code in code blocks or inline (formatted)
+
+First let's do some calculations in a block:
+
+```{r blocks_or_inline}
+mean_speed <- mean(cars$speed)
+first_100 <- sum(1:100)
+```
+
+Then let's explain them in a paragraph.  The mean speed was `r mean_speed`, and the sum of the first 100 positive integers is `r first_100`.
+
+We can, of course, also do calculations directly inline.  For example, the first 10 numbers of the Fibonacci series are `r fib <- numeric(10); fib[1] <- 1; fib[2] <- 1; for (i in 3:10) {fib[i] <- fib[i-2] + fib[i-1]}; fib`.
+
+
+# Include plots
 
 ````
 Here are 2 histograms from some car data.
 
-`r ''````{r hist}
-par(mfrow=c(1,2))
+```{r hist, echo=FALSE}`r ''`
+par(mfrow=c(1, 2))
 hist(cars$speed)
 hist(cars$dist)
-`r ''````
+```
 ````
 
 
-# Make some plots
+
+# Include plots (formatted)
 
 Here are 2 histograms from some car data.
 
-```{r hist}
-par(mfrow=c(1,2))
+```{r hist, echo=FALSE}
+par(mfrow=c(1, 2))
 hist(cars$speed)
 hist(cars$dist)
 ```
 
 
-# Something a little more complex
 
-````
-`r ''````{r hrt, fig.width=4, fig.height=4, fig.align='left'}
-dat <- data.frame(t=seq(0, 2*pi, by=0.01))
-x_hrt <- function(t) 16*sin(t)^3
-y_hrt <- function(t) 13*cos(t)-5*cos(2*t)-2*cos(3*t)-cos(4*t)
-dat$x=x_hrt(dat$t)
-dat$y=y_hrt(dat$t)
-with(dat, plot(x, y, type='l'))
-with(dat, polygon(x,y, col=rgb(1, 0, 0, 0.7)))
-`r ''````
-````
+# Demo
 
-(modified from http://stackoverflow.com/a/8082714)
-
-
-# Happy Valentine's Day
-
-```{r hrt, fig.width=4, fig.height=4, fig.align='left'}
-dat <- data.frame(t=seq(0, 2*pi, by=0.01))
-x_hrt <- function(t) 16*sin(t)^3
-y_hrt <- function(t) 13*cos(t)-5*cos(2*t)-2*cos(3*t)-cos(4*t)
-dat$x=x_hrt(dat$t)
-dat$y=y_hrt(dat$t)
-with(dat, plot(x, y, type='l'))
-with(dat, polygon(x, y, col=rgb(1, 0, 0, 0.7)))
-```
-
-
-
+\begin{center}
+Let's dive in!
+\end{center}
