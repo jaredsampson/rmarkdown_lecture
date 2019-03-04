@@ -2,8 +2,8 @@
 title: "R Markdown Demo"
 subtitle: 'PHAR G8012: Statistics for the Basic Sciences'
 author: "Jared Sampson"
-date: "2/20/2018"
-monofont: Courier
+date: "2019-03-05"
+monofont: Andale Mono
 mainfont: Times New Roman
 fontsize: 12pt
 output:
@@ -13,7 +13,11 @@ output:
 ---
 \sloppy
 ```{r setup, include=FALSE}
-# Above: this R code block is named "setup", and it will not be included in the final document
+# This R code block is named "setup", and it will not be included in the final document
+
+# Note that I had to employ some tricks below to get R-formatted code blocks not to be
+# interpreted as such by the `knitr` parser. This usually won't be necessary for most
+# R Markdown documents.
 
 # Basic options for knitr "chunks"
 knitr::opts_chunk$set(echo=TRUE, tidy=TRUE)
@@ -23,7 +27,9 @@ knitr::opts_chunk$set(echo=TRUE, tidy=TRUE)
 
 The instructions here are for working with R Markdown documents within [RStudio](https://www.rstudio.com/).  If you choose to use another editor or work from the command line you will probably need to make some adjustments to the workflow.
 
-Before creating your first `.Rmd` document, you need to install the R Markdown package into your R environment.  This can be done easily by running the command `install.packages("rmarkdown")` at the RStudio console command prompt.  This may take a few moments as dependencies are installed.
+Before creating your first `.Rmd` document, you need to install the R Markdown package into your `R` environment.  This can be done easily by running the command `install.packages("rmarkdown")` at the RStudio console command prompt.  This may take a few moments as dependencies are installed.
+
+Also note that the R Markdown source file for this document is included alongside the PDF, in case you'd like to check it out.
 
 
 
@@ -31,7 +37,7 @@ Before creating your first `.Rmd` document, you need to install the R Markdown p
 
 ## Create a new RStudio project
 
-1. File > New Project... > Existing Directory... > Browse... (to this directory) > Create Project.
+1. File > New Project... > Existing Directory... > Browse... (to this `rmarkdown_demo` directory) > Create Project.
 
 1. File > New File > R Markdown...
 
@@ -46,18 +52,17 @@ Before creating your first `.Rmd` document, you need to install the R Markdown p
 
 1. Look at the source code to see how it defines e.g. `**bold**` text and "fenced" (```` ``` ````) code blocks.
 
-1. Look at the first code block.  Click the green arrow to run the code in the block.  Note there is no output due to the `include=FALSE` option.
+1. Look at the first (`setup`) code block.  Click the green arrow to run the code in the block.  Note there is no output due to the `include=FALSE` option.
 
-1. Look at the second code block.  Run this code block, too, and see how the output gets printed just below it.  Try the third code block as well.
+1. Look at the second (`cars`) code block.  Run this code block, too, and see how the output gets printed just below it.  Try the third code block as well.  You should see a plot of pressure vs. temperature.
 
-1. Note that R code blocks are shown with a grey background and syntax highlighting as in the RStudio source editor, but plain (i.e. non-R) code blocks, which don't have the `{r block_name}` element directly the opening fence, are shown in a fixed-width font but not shaded grey or syntax-highlighted.  I'll use these plain code blocks to indicate non-R text  for your .Rmd document that is not specifically R code.
+1. Note that in this instructions document, `R` chunks are shown with a grey background and syntax highlighting, but plain (i.e. non-`R`) code blocks, which don't have the `{r chunk-name}` element directly the opening fence, are shown in a fixed-width font but not shaded grey or syntax-highlighted.  I'll use these plain code blocks to indicate non-`R` text  for your .Rmd document that is not specifically `R` code.
 
-1. Delete everything after the first ` ```{r setup}``` ` code block (or don't, if you want to keep it for reference), and let's work through a problem.
 
 
 ## A "real" problem
 
-You'll find the `bodytempandheartrate.csv` dataset in this `rmarkdown_demo` project folder.  We're going to do problem #1a from Problem Set 2: Calculate 95% confidence intervals for body temperature and heart rate for the sample as a whole and for men and women separately.
+You'll find the `bodytempandheartrate.csv` dataset from Courseworks already in this `rmarkdown_demo` project folder.  We're going to do problem #1a from 2018's Problem Set 2: Calculate 95% confidence intervals for body temperature and heart rate for the sample as a whole and for men and women separately.
 
 1. Add a header by typing the following on a line by itself.
 
@@ -65,11 +70,11 @@ You'll find the `bodytempandheartrate.csv` dataset in this `rmarkdown_demo` proj
     # Problem 1a.
     ```
 
-    See what happens if you add extra hash/pound/octothorpe symbols---use 1-6 of these these to get nested heading levels 1 through 6.
+    See what happens if you add extra hash/pound/octothorpe symbols and knit again---use 1-6 of these these to get nested heading levels 1 through 6.
 
 1. Add a description of the question you are answering under the header.  Try making it bold.  Where do you have to put the asterisks?
 
-1. Insert an R code block via "Insert > R".
+1. Insert an `R` code block via "Insert > R".
 
 1. Write some code in the code block.  Include comments for anything that might be unclear.
 
@@ -95,31 +100,23 @@ You'll find the `bodytempandheartrate.csv` dataset in this `rmarkdown_demo` proj
     hr_f_conf <- t.test(hr_f)$conf.int
     ```
 
-1. We can access the values R has calculated for these stored confidence intervals using the notation `` `r '\x60r hr_all_conf\x60'` `` inline in a regular line of text.
-
-1. After the code block, add a paragraph or other text (here, a bulleted list) to answer the question.
+1. We can access the values calculated for these stored confidence intervals using the form `` `r '\x60r hr_all_conf\x60'` `` inline in a regular line of text.  After the code chunk, add a paragraph or other text (here, a bulleted list, note the blank line between the paragraph and the bullets) to answer the question.
 
     ```
     The confidence intervals for heart rate are:
-    - All: `r '\x60r hr_all_conf\x60'`
-    - Men: `r '\x60r hr_m_conf\x60'`
-    - Women: `r '\x60r hr_f_conf\x60'`
+    
+    * All: `r '\x60r hr_all_conf\x60'`
+    * Men: `r '\x60r hr_m_conf\x60'`
+    * Women: `r '\x60r hr_f_conf\x60'`
     ```
 
-1. When you knit your document, this will show up like this:
-
-    > The confidence intervals for heart rate are:
-    > - All: `r hr_all_conf`
-    > - Men: `r hr_m_conf`
-    > - Women: `r hr_f_conf`
-
-1. That seems like a lot of unnecessary digits.  Let's adjust that output option.  In the `setup` block at the top of the document, add the following line and re-knit.
+1. You may have noticed that `R` uses 7 decimal places by default.  That seems like a lot of unnecessary digits.  Let's adjust that output option.  In the `setup` code chunk at the very top of the document, add the following line and re-knit.
 
     ```{r options, eval=FALSE}
     options(digits=2)
     ```
 
-  Note that `options()` is not specific to R Markdown, but is a general R function, so you can use it in any R script.
+    Note that `options()` is not specific to R Markdown, but is a general `R` function, so you can use it in any `R` script.
 
 
 ## Make a figure
@@ -129,20 +126,20 @@ You'll find the `bodytempandheartrate.csv` dataset in this `rmarkdown_demo` proj
 1. Add some histograms or boxplot of the temperature data (always a good idea to do this before even calculating any statistics). 
 
     ```{r temp_figs, eval=FALSE}
-    hist(temp_m)
-    hist(temp_f)
-    boxplot(hr_m, hr_f, names=c("Men", "Women"), notch=TRUE)
+    hist(temp_m, main="Body Temperature (Men)", xlab="°F")
+    hist(temp_f, main="Body Temperature (Women)", xlab="°F")
+    boxplot(temp_m, temp_f, main="Body Temperature", ylab="°F", names=c("Men", "Women"), notch=TRUE)
     ```
     
-1. That takes up too much space.  Combine them into one row by adding the following line before the first `hist` statement.
+1. That takes up too much space.  Let's combine them into one row by adding the following line before the first `hist` statement.
 
     ```{r par, eval=FALSE}
-    par(mfrow=c(1, 3)) # "multi-figure by row"
+    par(mfrow=c(1, 3))  # 1x3 matrix figure, populated in row order
     ```
 
-1. But now the aspect ratio is too tall.  Correct it by adding `fig.width` and `fig.asp` options after the block name, so it looks like `{r some_figs, fig.width=3, fig.asp=0.4}`.
+1. But now the aspect ratio is too tall.  Improve it by adding `fig.width` and `fig.asp` options after the block name, so it looks like `{r some_figs, fig.width=3, fig.asp=0.4}`.
 
-1. What if we want it to be a floating figure (i.e. not move with the text but be anchored to the top or bottom of a page like a journal figure)?  Add `fig.cap="Some figure caption."` to the block options as well.  Note that this functions differently depending on the output type (HTML, PDF, Word).
+1. If we want a floating figure (i.e. not move with the text but be anchored to the top or bottom of a page like a journal figure), add `fig.cap="Some figure caption."` to the block options.  Note that this functions differently depending on the output type (HTML, PDF, Word).
 
 
 ## Other things you may want to try
@@ -157,7 +154,7 @@ You'll find the `bodytempandheartrate.csv` dataset in this `rmarkdown_demo` proj
     
     See https://vimeo.com/110804387 for a video example.
 
-1. If you've installed LaTeX, try creating a PDF.  Perhaps you don't like the default font in the RStudio PDF template, and would like to change the fonts.  You can do so like this within the YAML header:
+1. If you've installed \LaTeX, try creating a PDF.  (If not, a lightweight option is [TinyTeX](https://yihui.name/tinytex/), also from Yihui Xie, the creator of `knitr`.)  Perhaps you don't like the default font in the RStudio PDF template, and would like to change the fonts.  You can do so like this within the YAML header:
     
     ```
     output:
@@ -168,7 +165,7 @@ You'll find the `bodytempandheartrate.csv` dataset in this `rmarkdown_demo` proj
     fontsize: 11pt
     ```
     
-    This asks Pandoc to generate the PDF using a custom LaTeX engine that recognizes the font-related frontmatter options. XeLaTeX also is better able than the default engine to handle non-ASCII characters such as Greek letters.  Although the default engine does handle LaTeX math mode expressions just fine: `$\pi$` turns into $\pi$ ; and the expression
+    This asks Pandoc to generate the PDF using a different LaTeX engine that recognizes the font-related frontmatter options. XeLaTeX is also better able than the default engine to handle non-ASCII characters such as Greek letters.  Although the default engine (`pdflatex`) does handle LaTeX math mode expressions just fine: `$\pi$` turns into $\pi$ ; and the expression
     
         $$ \sum_{n=1}^{\infty} 2^{-n} = 1 $$
     

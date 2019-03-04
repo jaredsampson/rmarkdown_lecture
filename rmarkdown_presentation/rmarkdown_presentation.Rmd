@@ -1,7 +1,7 @@
 ---
 title: "Presenting Data with R Markdown"
 author: "Jared Sampson"
-date: "2/20/2018"
+date: "2019-03-05"
 output:
   beamer_presentation: 
     slide_level: 1
@@ -47,7 +47,7 @@ options(width=40)
 
 # R Markdown
 
-- Plain-text format, use any text editor.
+- Plain-text format, use any text editor
 
 - Embedded R code is evaluated in-place at compile time.
 
@@ -55,10 +55,10 @@ options(width=40)
 
 - Less copy-pasting/scouring/redoing work you've already done.
 
-- Based on the following projects:
+- Based on the following open-source projects:
 
     - [Markdown](https://daringfireball.net/projects/markdown/) (John Gruber)
-    - [knitr](https://yihui.name/knitr/) (Yihui Xie)
+    - [knitr](https://yihui.name/knitr/) (Yihui Xie, now at RStudio)
     - [pandoc](http://pandoc.org/) (John McFarlane)
 
 
@@ -76,6 +76,7 @@ options(width=40)
 3. Durability
     - Plain text is universal.
     - Multiple supported output formats.
+    - Community-based support.
 
 
 
@@ -112,10 +113,11 @@ options(width=40)
 # A simple R Markdown document
 
 ````
-## A Heading
+## A Level-2 Heading
 
-This is some text in **bold** and *italic*.  With a 
-[link](http://www.example.com/).
+You can make things **bold** or *italic* (or _italic_).
+Or ***both***.
+Here's a sentence with a [link](http://www.example.com/).
 
 ```{r cars}`r ''`
 summary(cars)
@@ -126,10 +128,11 @@ summary(cars)
 
 # A simple R Markdown document (knitted)
 
-## A Heading
+## A Level-2 Heading
 
-This is some text in **bold** and *italic*.  With a 
-[link](http://www.example.com/).
+You can make things **bold** or *italic* (or _italic_).
+Or ***both***.
+Here's a sentence with a [link](http://www.example.com/).
 
 ```{r cars}
 summary(cars)
@@ -143,7 +146,7 @@ summary(cars)
 ---
 title: "Hello World"
 author: "Jared Sampson"
-date: "2/20/2018"
+date: "2019-03-05"
 output: pdf_document
 ---
 ```
@@ -166,7 +169,7 @@ knitr::opts_chunk$set(echo=TRUE)
 
 - Set default options to be applied to all code blocks ("chunks") with `opts_chunk$set(...)`.
 
-- Note the `include=FALSE`: this code does not appear in the document.
+- Note the `include=FALSE`.  This code does not appear in the document.
 
 
 
@@ -181,7 +184,7 @@ first_100 <- sum(1:100)
 ```
 
 Then let's explain them in a paragraph.  The mean speed
-was `r '\x60r mean_speed\x60'`, and the sum of the first 100
+was `r '\x60r mean_speed\x60'` mph, and the sum of the first 100
 positive integers is `r '\x60r first_100\x60'`.
 
 We can also do calculations directly inline.  For 
@@ -201,7 +204,7 @@ mean_speed <- mean(cars$speed)
 first_100 <- sum(1:100)
 ```
 
-Then let's explain them in a paragraph.  The mean speed was `r mean_speed`, and the sum of the first 100 positive integers is `r first_100`.
+Then let's explain them in a paragraph.  The mean speed was `r mean_speed` mph, and the sum of the first 100 positive integers is `r first_100`.
 
 We can, of course, also do calculations directly inline.  For example, the first 10 numbers of the Fibonacci series are `r fib <- numeric(10); fib[1] <- 1; fib[2] <- 1; for (i in 3:10) {fib[i] <- fib[i-2] + fib[i-1]}; fib`.
 
