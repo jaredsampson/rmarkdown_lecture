@@ -1,9 +1,9 @@
 ---
 title: "R Markdown Demo"
-subtitle: 'PHAR G8012: Statistics for the Basic Sciences'
+subtitle: "PHAR G8012: Statistics for the Basic Sciences"
 author: "Jared Sampson"
-date: "2019-03-05"
-monofont: Andale Mono
+date: "2020-02-25"
+monofont: Monaco
 mainfont: Times New Roman
 fontsize: 12pt
 output:
@@ -11,7 +11,7 @@ output:
     latex_engine: xelatex
   html_document: default
 ---
-\sloppy
+
 ```{r setup, include=FALSE}
 # This R code block is named "setup", and it will not be included in the final document
 
@@ -25,11 +25,11 @@ knitr::opts_chunk$set(echo=TRUE, tidy=TRUE)
 
 # Before We Begin
 
-The instructions here are for working with R Markdown documents within [RStudio](https://www.rstudio.com/).  If you choose to use another editor or work from the command line you will probably need to make some adjustments to the workflow.
+The instructions here are for working with R Markdown documents within [RStudio](https://www.rstudio.com/).  If you choose to use another editor or work from the command line (i.e. standalone `R`) you will probably need to make some adjustments to the workflow.
 
-Before creating your first `.Rmd` document, you need to install the R Markdown package into your `R` environment.  This can be done easily by running the command `install.packages("rmarkdown")` at the RStudio console command prompt.  This may take a few moments as dependencies are installed.
+Before creating your first `.Rmd` document, you need to install the R Markdown package into your `R` environment.  This can be done easily by running the command `install.packages("rmarkdown")` at the RStudio console command prompt.  This may take a few moments as dependencies are installed.  Note that RStudio comes bundled with its own `pandoc` executable, which is required for converting the `.md` (Markdown) files produced by `knitr` into `.html`, `.docx`, or `.pdf`.  You can read more about R Markdown in the [documentation](https://rmarkdown.rstudio.com/docs/index.html).
 
-Also note that the R Markdown source file for this document is included alongside the PDF, in case you'd like to check it out.
+Also note that the `.Rmd` source file for this document is included alongside the PDF, in case you'd like to check it out.
 
 
 
@@ -154,7 +154,7 @@ You'll find the `bodytempandheartrate.csv` dataset from Courseworks already in t
     
     See https://vimeo.com/110804387 for a video example.
 
-1. If you've installed \LaTeX, try creating a PDF.  (If not, a lightweight option is [TinyTeX](https://yihui.name/tinytex/), also from Yihui Xie, the creator of `knitr`.)  Perhaps you don't like the default font in the RStudio PDF template, and would like to change the fonts.  You can do so like this within the YAML header:
+1. If you've installed LaTeX, try creating a PDF.  (If not, a lightweight option is [TinyTeX](https://yihui.name/tinytex/), also from Yihui Xie, the creator of `knitr`.)  Perhaps you don't like the default font in the RStudio PDF template, and would like to change the fonts.  You can do so like this within the YAML header:
     
     ```
     output:
@@ -175,12 +175,10 @@ You'll find the `bodytempandheartrate.csv` dataset from Courseworks already in t
   
 1. Write a paper or (gasp) your thesis in R Markdown.  It's been done!
 
-- https://rosannavanhespenresearch.wordpress.com/2016/02/03/writing-your-thesis-with-r-markdown-1-getting-started/
-- https://paulvanderlaken.com/2017/09/01/writing-your-thesis-with-r-markdown-1-getting-started/
-- http://robertmyles.github.io/2016/04/15/write-your-thesis-or-paper-in-r-markdown/
-  
-    and someone has even written a LaTeX template that adheres to Columbia's thesis guidelines:
-  
-- https://charlesmcnamara.com/latex-template-for-columbia-university-dissertations/
+- Mike Frank & Chris Hartgerink: [RMarkdown for writing reproducible scientific papers](https://libscie.github.io/rmarkdown-workshop/handout.html)
+- Rosanna van Hespen: [Writing your thesis with R Markdown](https://rosannavanhespenresearch.wordpress.com/2016/02/03/writing-your-thesis-with-r-markdown-1-getting-started/)
+- Robert Myles McDonnell: [Write your thesis or paper in R Markdown](http://robertmyles.github.io/2016/04/15/write-your-thesis-or-paper-in-r-markdown/)
+- Chester Ismay: [thesisdown](https://github.com/ismayc/thesisdown)
+- Charles McNamara: [\LaTeX template for Columbia University Dissertations](https://charlesmcnamara.com/latex-template-for-columbia-university-dissertations/)
     
 ## That's it.  Have fun using R Markdown!
