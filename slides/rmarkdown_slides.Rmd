@@ -1,7 +1,7 @@
 ---
 title: "Presenting Data with R Markdown"
 author: "Jared Sampson"
-date: "2019-03-05"
+date: "2020-02-25"
 output:
   beamer_presentation: 
     slide_level: 1
@@ -13,6 +13,11 @@ header-includes: \usepackage{smartdiagram}
 ---
 
 ```{r setup, include=FALSE}
+
+# Please note that this presentation includes some LaTeX markup along with R
+# Markdown, which I have used to generate flow charts and diagrams.  You don't
+# have to use LaTeX markup to be able to use R Markdown!
+
 knitr::opts_chunk$set(echo=TRUE)
 options(width=40)
 ```
@@ -90,7 +95,7 @@ options(width=40)
     Presentations,
     Papers,
     Grants,
-    \emph{Problem Sets!},
+    \emph{Stats Problem Sets!},
     Thesis
 }
 \end{center}
@@ -101,8 +106,8 @@ options(width=40)
 \begin{center}
 \smartdiagram[descriptive diagram]{
     {Setup, {Create a folder (or RStudio project) with your data file.}},
-    {Write, {Combine text, R code and figures in an \texttt{.Rmd} file.}},
-    {Knit, {\texttt{knitr} compiles R Markdown source to Markdown + figures.
+    {Write, {Combine text, \texttt{R} code and figures in an \texttt{.Rmd} file.}},
+    {Knit, {\texttt{knitr} compiles \texttt{.Rmd} source to Markdown + figures.
             \texttt{pandoc} converts Markdown + figures to HTML / PDF / Word.}},
     {Repeat, {Easily modify and re-generate your document at any time.}},
 }
@@ -195,7 +200,7 @@ for (i in 3:10) {fib[i] <- fib[i-2] + fib[i-1]}; fib\x60'`.
 
 
 
-# Evaluate R code in code blocks or inline (formatted)
+# Evaluate R code in code blocks or inline (knitted)
 
 First let's do some calculations in a block:
 
@@ -223,7 +228,7 @@ hist(cars$dist)
 
 
 
-# Include plots (formatted)
+# Include plots (knitted)
 
 Here are 2 histograms from some car data.
 
